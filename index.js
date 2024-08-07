@@ -7,10 +7,23 @@ import resume from "./routes/resume.js";
 import login from "./routes/login.js";
 
 const app = express();
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 5050;
+
+const allowedOrigins = [process.env.FRONTEND_URL];
+
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true,
+};
 
 app.use(morgan("dev"));
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.static("public"));
 
@@ -18,6 +31,8 @@ app.use("/signup", signup);
 app.use("/resume", resume);
 app.use("/login", login);
 
-app.listen(PORT || 5050, () => {
-  console.log(`Running on: http://localhost:${PORT}`);
+app.listen(PORT, () => {
+  console.log(
+    `Running on: ${process.env.NODE_ENV === "development" ? `http://localhost:${PORT}` : process.env.FRONTEND_URL}`,
+  );
 });
