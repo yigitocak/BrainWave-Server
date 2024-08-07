@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import morgan from "morgan";
 import "dotenv/config";
+import cookieParser from "cookie-parser";
 import signup from "./routes/signup.js";
 import resume from "./routes/resume.js";
 import login from "./routes/login.js";
@@ -24,6 +25,7 @@ const corsOptions = {
 
 app.use(morgan("dev"));
 app.use(cors(corsOptions));
+app.use(cookieParser());
 app.use(express.json());
 app.use(express.static("public"));
 
