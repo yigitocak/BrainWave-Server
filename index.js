@@ -6,6 +6,7 @@ import cookieParser from "cookie-parser";
 import signup from "./routes/signup.js";
 import resume from "./routes/resume.js";
 import login from "./routes/login.js";
+import logout from "./routes/logout.js";
 
 const app = express();
 const PORT = process.env.PORT || 5050;
@@ -32,6 +33,7 @@ app.use(express.static("public"));
 app.use("/signup", signup);
 app.use("/resume", resume);
 app.use("/login", login);
+app.use("/logout", logout);
 
 app.listen(PORT, () => {
   console.log(
