@@ -7,12 +7,10 @@ const db = knex(knexFile.development);
 export const loginViews = async (req, res) => {
   const { email, password, rememberMe } = req.body;
   if (!email || !password) {
-    return res
-      .status(400)
-      .json({
-        message: "Bad request body! Email and password are required.",
-        success: false,
-      });
+    return res.status(400).json({
+      message: "Bad request body! Email and password are required.",
+      success: false,
+    });
   }
 
   try {
@@ -32,12 +30,10 @@ export const loginViews = async (req, res) => {
 
     const SECRET_KEY = process.env.SECRET_KEY;
     if (!SECRET_KEY) {
-      return res
-        .status(500)
-        .json({
-          message: "Internal server error. SECRET_KEY is not defined.",
-          success: false,
-        });
+      return res.status(500).json({
+        message: "Internal server error. SECRET_KEY is not defined.",
+        success: false,
+      });
     }
 
     const expiresIn = rememberMe ? "7d" : "12h";
@@ -59,7 +55,6 @@ export const loginViews = async (req, res) => {
 
     return res.status(200).json({
       success: true,
-      token,
       message: rememberMe ? "Logged in for 7 days" : "Logged in for 12 hours",
     });
   } catch (e) {
