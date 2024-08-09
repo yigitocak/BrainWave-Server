@@ -1,7 +1,5 @@
-import knex from "knex";
-import knexfile from "../knexfile.js";
+import Users from "../models/Users.js";
 import bcrypt from "bcrypt";
-const db = knex(knexfile.development);
 import { generateTokenAndSetCookie } from "./helpers/token.js";
 import "dotenv/config";
 
@@ -16,10 +14,10 @@ export const loginUserView = async (req, res) => {
   }
 
   try {
-    const user = await db("users").where({ email }).first();
+    const user = await Users.findOne({ email });
     if (!user) {
       return res.status(404).json({
-        message: "User not found",
+        message: "Users not found",
         success: false,
       });
     }

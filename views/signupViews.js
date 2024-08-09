@@ -1,7 +1,5 @@
-import knex from "knex";
-import knexFile from "../knexfile.js";
+import Users from "../models/Users.js";
 import bcrypt from "bcrypt";
-const db = knex(knexFile.development);
 import { generateTokenAndSetCookie } from "./helpers/token.js";
 
 export const signUpUser = async (req, res) => {
@@ -29,7 +27,7 @@ export const signUpUser = async (req, res) => {
   }
 
   try {
-    const userExists = await db("users").where({ email }).first();
+    const userExists = await Users.findOne({ email });
     if (userExists) {
       return res
         .status(409)
@@ -39,9 +37,9 @@ export const signUpUser = async (req, res) => {
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(password, saltRounds);
 
-    const user = await db("users").insert({
-      email,
+    const user = await Users.create({
       name,
+      email,
       password: hashedPassword,
     });
 
