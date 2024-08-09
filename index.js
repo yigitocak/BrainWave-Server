@@ -1,3 +1,5 @@
+import connectDB from "./config/db.js";
+import mongoose from "mongoose";
 import express from "express";
 import cors from "cors";
 import morgan from "morgan";
@@ -7,6 +9,8 @@ import signup from "./routes/signup.js";
 import resume from "./routes/resume.js";
 import login from "./routes/login.js";
 import logout from "./routes/logout.js";
+
+connectDB();
 
 const app = express();
 const PORT = process.env.PORT || 5050;
@@ -35,8 +39,13 @@ app.use("/resume", resume);
 app.use("/login", login);
 app.use("/logout", logout);
 
-app.listen(PORT, () => {
-  console.log(
-    `Running on: ${process.env.NODE_ENV === "development" ? `http://localhost:${PORT}` : process.env.FRONTEND_URL}`,
-  );
+// Only run the app if the connection to Database is successful
+mongoose.connection.once("open", () => {
+  console.log("Connected to MongoDB");
+
+  app.listen(PORT, () => {
+    console.log(
+      `Running on: ${process.env.NODE_ENV === "development" ? `http://localhost:${PORT}` : process.env.FRONTEND_URL}`,
+    );
+  });
 });
