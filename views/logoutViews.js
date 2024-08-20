@@ -1,5 +1,5 @@
 export const logoutUser = async (_req, res) => {
-  res.clearCookie("token", {
+  res.clearCookie("authToken", {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: "Strict",
