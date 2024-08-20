@@ -15,7 +15,7 @@ const authenticateToken = (req, res, next) => {
 
   jwt.verify(token, SECRET_KEY, (err, user) => {
     if (err) {
-      res.clearCookie("token");
+      res.clearCookie("authToken");
       if (err.name === "TokenExpiredError") {
         return res.status(401).json({
           success: false,
