@@ -14,6 +14,7 @@ export const generateTokenAndSetCookie = (user, rememberMe, res) => {
     {
       id: user.id,
       email: user.email,
+      username: user.name,
     },
     SECRET_KEY,
     { expiresIn },
