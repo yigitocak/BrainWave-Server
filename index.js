@@ -2,6 +2,7 @@ import connectDB from "./config/db.js";
 import mongoose from "mongoose";
 import express from "express";
 import cors from "cors";
+import morgan from "morgan";
 import "dotenv/config";
 import cookieParser from "cookie-parser";
 import signup from "./routes/signup.js";
@@ -34,6 +35,7 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
+app.use(morgan("dev"));
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.static("public"));
