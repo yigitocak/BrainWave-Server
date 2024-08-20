@@ -21,9 +21,7 @@ export const generateTokenAndSetCookie = (user, rememberMe, res) => {
   );
 
   res.cookie("authToken", token, {
-    httpOnly: true,
     secure: process.env.NODE_ENV === "production",
-    sameSite: "none",
     maxAge: rememberMe ? 7 * 24 * 60 * 60 * 1000 : 12 * 60 * 60 * 1000,
   });
 
