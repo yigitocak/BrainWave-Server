@@ -34,7 +34,6 @@ const corsOptions = {
   credentials: true,
 };
 
-app.use(morgan("dev"));
 app.use(cors(corsOptions));
 app.use(cookieParser());
 app.use(express.json());
