@@ -24,9 +24,9 @@ const PORT = process.env.PORT || 5050;
 const corsOptions = {
   origin: process.env.FRONTEND_URL,
   credentials: true,
-  optionsSuccessStatus: 200,
 };
 
+app.set('trust proxy', 1);
 app.use(cors(corsOptions));
 app.use(morgan("dev"));
 app.use(cookieParser());
@@ -44,13 +44,13 @@ app.use("/verify", verify);
 app.use("/resendVerification", resendVerification);
 app.use("/forgot", reset);
 
-// Only run the app if the connection to Database is successful
+// Only run the app if the connection to the database is successful
 mongoose.connection.once("open", () => {
   console.log("Connected to MongoDB");
 
   app.listen(PORT, () => {
     console.log(
-      `Running on: ${process.env.NODE_ENV === "development" ? `http://localhost:${PORT}` : process.env.FRONTEND_URL}`,
+        `Running on: ${process.env.NODE_ENV === "development" ? `http://localhost:${PORT}` : process.env.BACKEND_URL}`
     );
   });
 });
