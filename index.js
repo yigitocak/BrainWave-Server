@@ -21,27 +21,18 @@ connectDB();
 const app = express();
 const PORT = process.env.PORT || 5050;
 
-const allowedOrigins = [process.env.FRONTEND_URL];
-
 const corsOptions = {
-  origin: function (origin, callback) {
-    if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
+  origin: process.env.FRONTEND_URL,
   credentials: true,
 };
 
-if (process.env.NODE_ENV === "develop") {
-  app.use(morgan("dev"));
-}
-
 app.use(cors(corsOptions));
+app.use(morgan("dev"));
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.static("public"));
+
+app.set('trust proxy', 1);
 
 app.use("/signup", signup);
 app.use("/resume", resume);
@@ -54,13 +45,13 @@ app.use("/verify", verify);
 app.use("/resendVerification", resendVerification);
 app.use("/forgot", reset);
 
-// Only run the app if the connection to Database is successful
+// Only run the app if the connection to the database is successful
 mongoose.connection.once("open", () => {
   console.log("Connected to MongoDB");
 
   app.listen(PORT, () => {
     console.log(
-      `Running on: ${process.env.NODE_ENV === "development" ? `http://localhost:${PORT}` : process.env.FRONTEND_URL}`,
+        `Running on: ${process.env.NODE_ENV === "development" ? `http://localhost:${PORT}` : process.env.BACKEND_URL}`
     );
   });
 });
