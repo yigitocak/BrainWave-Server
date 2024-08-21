@@ -20,6 +20,13 @@ export const generateTokenAndSetCookie = (user, rememberMe, res) => {
     { expiresIn },
   );
 
+  console.log("Setting authToken cookie with options:", {
+    httpOnly: true,
+    secure: true,
+    sameSite: "None",
+    maxAge: rememberMe ? 7 * 24 * 60 * 60 * 1000 : 12 * 60 * 60 * 1000,
+  });
+
   res.cookie("authToken", token, {
     httpOnly: true,
     secure: true,
