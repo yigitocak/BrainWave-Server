@@ -1,6 +1,8 @@
 export const logoutUser = async (_req, res) => {
   res.clearCookie("authToken", {
-    secure: process.env.NODE_ENV === "production",
+    httpOnly: true,
+    secure: true,
+    sameSite: "none",
   });
   return res
     .status(200)
