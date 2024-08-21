@@ -21,17 +21,10 @@ connectDB();
 const app = express();
 const PORT = process.env.PORT || 5050;
 
-const allowedOrigins = [process.env.FRONTEND_URL];
-
 const corsOptions = {
-  origin: function (origin, callback) {
-    if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
+  origin: process.env.FRONTEND_URL,
   credentials: true,
+  optionsSuccessStatus: 200,
 };
 
 app.use(cors(corsOptions));
