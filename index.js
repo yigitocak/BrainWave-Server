@@ -34,6 +34,12 @@ app.use(express.static("public"));
 
 app.set('trust proxy', 1);
 
+app.use((req, res, next) => {
+  console.log("Request Headers:", req.headers);
+  console.log("Cookies received:", req.cookies);
+  next();
+});
+
 app.use("/signup", signup);
 app.use("/resume", resume);
 app.use("/login", login);
