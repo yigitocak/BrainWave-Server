@@ -3,12 +3,11 @@ import nodemailer from "nodemailer";
 export const sendVerificationEmail = async (email, verificationCode) => {
   try {
     const transporter = nodemailer.createTransport({
-      host: "smtp-relay.brevo.com",
-      port: 587,
+      service: "gmail",
       secure: true,
       auth: {
-        user: "7a7d6a003@smtp-brevo.com",
-        pass: "O4UEj5b9XDB2rRs6",
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
       },
     });
 
@@ -21,7 +20,6 @@ export const sendVerificationEmail = async (email, verificationCode) => {
     };
 
     await transporter.sendMail(mailOptions);
-    console.log("Verification email sent to:", email);
   } catch (error) {
     console.error("Error sending verification email:", error);
     throw new Error("Could not send verification email.");

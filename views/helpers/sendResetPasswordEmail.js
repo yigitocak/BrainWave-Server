@@ -3,12 +3,11 @@ import nodemailer from "nodemailer";
 export const sendResetPasswordEmail = async (email, resetUrl) => {
   try {
     const transporter = nodemailer.createTransport({
-      host: "smtp-relay.brevo.com",
-      port: 587,
+      service: "gmail",
       secure: true,
       auth: {
-        user: "7a7d6a003@smtp-brevo.com",
-        pass: "O4UEj5b9XDB2rRs6",
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
       },
     });
 
@@ -24,8 +23,6 @@ export const sendResetPasswordEmail = async (email, resetUrl) => {
     };
 
     await transporter.sendMail(mailOptions);
-
-    console.log(`Password reset email sent to ${email}`);
   } catch (error) {
     console.error("Error sending password reset email:", error);
     throw new Error("Could not send reset password email.");
