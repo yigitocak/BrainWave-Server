@@ -39,7 +39,6 @@ export const deleteAccountView = async (req, res) => {
     res.clearCookie("authToken", {
       httpOnly: true,
       secure: true,
-      domain: ".yigitocak.com",
       sameSite: "none",
     });
 

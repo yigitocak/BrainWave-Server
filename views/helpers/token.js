@@ -24,7 +24,6 @@ export const generateTokenAndSetCookie = (user, rememberMe, res) => {
     httpOnly: true,
     secure: true,
     sameSite: "none",
-    domain: ".yigitocak.com",
     maxAge: rememberMe ? 7 * 24 * 60 * 60 * 1000 : 12 * 60 * 60 * 1000,
   });
 
