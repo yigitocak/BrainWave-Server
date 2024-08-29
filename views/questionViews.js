@@ -43,7 +43,6 @@ export const getQuestionsView = async (_req, res) => {
 
 export const getOngoing = async (req, res) => {
   const { email } = req.user;
-  console.log(req.user);
 
   if (!email) {
     return res.status(400).json({ message: "Bad request", success: false });
@@ -98,7 +97,6 @@ export const getSolved = async (req, res) => {
   try {
     const dbUser = await Users.findOne({ email });
     if (!dbUser) {
-      console.log("a");
       return res
         .status(404)
         .json({ message: "User not found", success: false });

@@ -4,7 +4,6 @@ import "dotenv/config";
 const SECRET_KEY = process.env.SECRET_KEY;
 
 const authenticateToken = (req, res, next) => {
-  console.log("Cookies received:", req.cookies);
   const token = req.cookies.authToken;
 
   if (!token) {
@@ -34,6 +33,7 @@ const authenticateToken = (req, res, next) => {
         });
       }
     }
+
     req.user = user;
     next();
   });
