@@ -39,7 +39,7 @@ export const deleteAccountView = async (req, res) => {
     res.clearCookie("authToken", {
       httpOnly: true,
       secure: true,
-      sameSite: "None",
+      sameSite: "strict",
     });
 
     return res.status(200).json({ message: "Account deleted", success: true });
