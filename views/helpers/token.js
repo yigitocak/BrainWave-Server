@@ -1,16 +1,13 @@
 import jwt from "jsonwebtoken";
 
-export const generateTokenAndSetCookie = (user, rememberMe, res) => {
+export const generateToken = (user, rememberMe) => {
   const SECRET_KEY = process.env.SECRET_KEY;
   if (!SECRET_KEY) {
-    return res.status(500).json({
-      message: "Internal server error. SECRET_KEY is not defined.",
-      success: false,
-    });
+    throw new Error("Internal server error. SECRET_KEY is not defined.");
   }
 
   const expiresIn = rememberMe ? "7d" : "12h";
-  const token = jwt.sign(
+  return jwt.sign(
     {
       id: user.id,
       email: user.email,
@@ -19,14 +16,4 @@ export const generateTokenAndSetCookie = (user, rememberMe, res) => {
     SECRET_KEY,
     { expiresIn },
   );
-
-  res.cookie("authToken", token, {
-    httpOnly: true,
-    secure: true,
-    sameSite: "none",
-    path: "/",
-    maxAge: rememberMe ? 7 * 24 * 60 * 60 * 1000 : 12 * 60 * 60 * 1000,
-  });
-
-  return token;
 };

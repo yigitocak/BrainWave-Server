@@ -1,5 +1,5 @@
 import Users from "../models/Users.js";
-import { generateTokenAndSetCookie } from "./helpers/token.js";
+import { generateToken } from "./helpers/token.js";
 
 export const verifyUser = async (req, res) => {
   const { email, verificationCode, rememberMe } = req.body;
@@ -36,10 +36,11 @@ export const verifyUser = async (req, res) => {
     user.verificationCodeExpires = undefined;
     await user.save();
 
-    generateTokenAndSetCookie(user, rememberMe, res);
+    const authToken = generateToken(user, rememberMe);
 
     return res.status(200).json({
       message: "Account verified successfully!",
+      authToken,
       success: true,
     });
   } catch (e) {

@@ -44,7 +44,7 @@ export const signUpUser = async (req, res) => {
       .toUpperCase();
     const verificationCodeExpires = Date.now() + 3600000;
 
-    const user = await Users.create({
+    await Users.create({
       name,
       email,
       password: hashedPassword,

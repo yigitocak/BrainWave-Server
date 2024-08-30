@@ -1,6 +1,6 @@
 import Users from "../models/Users.js";
 import bcrypt from "bcrypt";
-import { generateTokenAndSetCookie } from "./helpers/token.js";
+import { generateToken } from "./helpers/token.js";
 import { sendVerificationEmail } from "./helpers/sendVerificationEmail.js";
 import crypto from "crypto";
 
@@ -45,18 +45,18 @@ export const loginUserView = async (req, res) => {
     const isPasswordMatch = await bcrypt.compare(password, user.password);
 
     if (!isPasswordMatch) {
-      return res.status(401).json({
-        message: "Invalid credentials.",
-        success: false,
-      });
+      return res
+        .status(401)
+        .json({ message: "Invalid credentials.", success: false });
     }
 
-    await generateTokenAndSetCookie(user, rememberMe, res);
+    const authToken = generateToken(user, rememberMe);
 
     return res.status(200).json({
       message: "Login successful!",
       success: true,
       tokenProvided: true,
+      authToken,
       username: user.name,
       isVerified: true,
     });
