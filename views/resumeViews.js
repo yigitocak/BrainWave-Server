@@ -2,7 +2,7 @@ import path from "path";
 
 export const downloadResume = async (_req, res) => {
   try {
-    const filePath = path.resolve("files/resume.pdf");
+    const filePath = path.resolve("files/yigit-ocak-resume.pdf");
     res.download(filePath, "yigit-ocak-resume.pdf", (err) => {
       if (err) {
         console.error("Failed to download file:", err);
